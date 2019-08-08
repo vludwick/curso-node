@@ -21,4 +21,4 @@ app.get("/algo1", (req, res) => {
 app.get("/algo2", (req, res) => {
     res.send("Você solicitou o terceiro algo.");
 })
-app.listen(3001);
+app.listen(process.env.PORT);
