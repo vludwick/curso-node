@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="res"></div>
+    <button id="load">clique</button>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo, aut.</p>
+    <script>
+        var containerElement = document.querySelector("div#res");
+        var buttonElement = document.querySelector("button#load");
+        function buscaInfo() {
+            return new Promise((resolve, reject) => {
+                var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://spring-ionic-curso-ludwick.herokuapp.com/categorias");
+            xhr.send(null);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resolve(JSON.parse(xhr.responseText));
+                    }
+                    else if (xhr.status === 404) {
+                        reject("Usuario nao existe.");
+                    }
+                    else {
+                        reject("Algo deu errado.");
+                    }
+                }
+            }
+            });
+        }
+
+        function renderInfo() {
+            buscaInfo()
+            .then((response) => {
+                var textElement = document.createElement("p").appendChild(document.createTextNode(response.Teste + response.Teste2));
+                containerElement.appendChild(textElement);
+                console.log(response); 
+            })
+            .catch((error) => {
+                containerElement.html = error;
+                console.log(error);
+            });
+        }
+
+        buttonElement.onclick = renderInfo;
+
+    </script>
+</body>
+
+</html>
